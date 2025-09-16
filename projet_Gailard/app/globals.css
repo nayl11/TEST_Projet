@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color palette for mood tracker with warm amber and pink accents */
+  --background: #fefce8; /* Light cream for welcoming background */
+  --foreground: #374151; /* Dark gray for primary text */
+  --card: #ffffff; /* White for cards */
+  --card-foreground: #374151; /* Dark gray for card text */
+  --popover: #ffffff; /* White for popover elements */
+  --popover-foreground: #374151; /* Dark gray for popover text */
+  --primary: #d97706; /* Amber for call-to-action buttons */
+  --primary-foreground: #ffffff; /* White text on primary buttons */
+  --secondary: #ec4899; /* Pink for secondary actions */
+  --secondary-foreground: #ffffff; /* White text on secondary actions */
+  --muted: #fefce8; /* Light cream for muted backgrounds */
+  --muted-foreground: #6b7280; /* Gray for muted text */
+  --accent: #ec4899; /* Pink for accents */
+  --accent-foreground: #ffffff; /* White for accent text */
+  --destructive: #dc2626; /* Red for destructive actions */
+  --destructive-foreground: #ffffff; /* White text on destructive actions */
+  --border: #d1d5db; /* Light gray for borders */
+  --input: #ffffff; /* White for input fields */
+  --ring: #ec4899; /* Pink for focus rings */
+  --chart-1: #d97706; /* Amber for chart elements */
+  --chart-2: #ec4899; /* Pink for chart elements */
+  --chart-3: #f59e0b; /* Orange for chart elements */
+  --chart-4: #dc2626; /* Red for chart elements */
+  --chart-5: #475569; /* Blue-gray for chart elements */
+  --radius: 0.5rem; /* For rounded corners */
+  --sidebar: #fefce8; /* Light cream for sidebar */
+  --sidebar-foreground: #374151; /* Dark gray for sidebar text */
+  --sidebar-primary: #d97706; /* Amber for primary sidebar actions */
+  --sidebar-primary-foreground: #ffffff; /* White text on primary sidebar actions */
+  --sidebar-accent: #ec4899; /* Pink for sidebar accents */
+  --sidebar-accent-foreground: #ffffff; /* White text on sidebar accents */
+  --sidebar-border: #d1d5db; /* Light gray for sidebar borders */
+  --sidebar-ring: #ec4899; /* Pink for sidebar focus rings */
+}
+
+.dark {
+  --background: #1f2937; /* Dark gray background */
+  --foreground: #f9fafb; /* Light text */
+  --card: #374151; /* Dark card background */
+  --card-foreground: #f9fafb; /* Light card text */
+  --popover: #374151; /* Dark popover */
+  --popover-foreground: #f9fafb; /* Light popover text */
+  --primary: #f59e0b; /* Lighter amber for dark mode */
+  --primary-foreground: #1f2937; /* Dark text on primary */
+  --secondary: #f472b6; /* Lighter pink for dark mode */
+  --secondary-foreground: #1f2937; /* Dark text on secondary */
+  --muted: #4b5563; /* Muted dark background */
+  --muted-foreground: #9ca3af; /* Muted light text */
+  --accent: #f472b6; /* Lighter pink accent */
+  --accent-foreground: #1f2937; /* Dark accent text */
+  --destructive: #ef4444; /* Lighter red for dark mode */
+  --destructive-foreground: #f9fafb; /* Light text on destructive */
+  --border: #4b5563; /* Dark border */
+  --input: #374151; /* Dark input background */
+  --ring: #f472b6; /* Pink focus ring */
+  --chart-1: #f59e0b; /* Amber chart color */
+  --chart-2: #f472b6; /* Pink chart color */
+  --chart-3: #fb923c; /* Orange chart color */
+  --chart-4: #ef4444; /* Red chart color */
+  --chart-5: #64748b; /* Slate chart color */
+  --sidebar: #1f2937; /* Dark sidebar */
+  --sidebar-foreground: #f9fafb; /* Light sidebar text */
+  --sidebar-primary: #f59e0b; /* Amber sidebar primary */
+  --sidebar-primary-foreground: #1f2937; /* Dark text on sidebar primary */
+  --sidebar-accent: #f472b6; /* Pink sidebar accent */
+  --sidebar-accent-foreground: #1f2937; /* Dark text on sidebar accent */
+  --sidebar-border: #4b5563; /* Dark sidebar border */
+  --sidebar-ring: #f472b6; /* Pink sidebar focus ring */
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

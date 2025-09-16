@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baromètre d'Humeur des Employés</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: #78716c;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-clickable {
+            cursor: pointer;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: #fef3c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .card-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #d97706;
+        }
+
+        .btn-secondary {
+            background: #ec4899;
+        }
+
+        .btn-secondary:hover {
+            background: #db2777;
+        }
+
+        .btn-back {
+            background: #6b7280;
+            margin-bottom: 1rem;
+            width: auto;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-back:hover {
+            background: #4b5563;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .emoji-btn {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .emoji-btn:hover {
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+
+        .emoji-btn.selected {
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+
+        .rating-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .rating-btn {
+            padding: 0.5rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 40px;
+        }
+
+        .rating-btn:hover {
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+
+        .rating-btn.selected {
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-btn:hover {
+            border-color: #374151;
+        }
+
+        .color-btn.selected {
+            border-color: #374151;
+            transform: scale(1.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f59e0b;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+
+        .entry-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .entry-item {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .entry-date {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .entry-details {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.875rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Home View -->
+        <div id="home-view">
+            <div class="header">
+                <h1>Baromètre d'Humeur</h1>
+                <p>Suivez votre bien-être au quotidien</p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card card-clickable" onclick="showView('morning')">
+                    <div class="card-header">
+                        <div class="card-icon">🌅</div>
+                        <div class="card-title">Saisie Matinale</div>
+                        <div class="card-description">Comment vous sentez-vous ce matin ?</div>
+                    </div>
+                    <button class="btn">Commencer la journée</button>
+                </div>
+
+                <div class="card card-clickable" onclick="showView('evening')">
+                    <div class="card-header">
+                        <div class="card-icon">🌙</div>
+                        <div class="card-title">Bilan du Soir</div>
+                        <div class="card-description">Comment s'est passée votre journée ?</div>
+                    </div>
+                    <button class="btn btn-secondary">Faire le bilan</button>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card card-clickable" onclick="showView('dashboard')">
+                    <div class="card-header">
+                        <div class="card-title">📊 Tableau de Bord</div>
+                        <div class="card-description">Visualisez vos tendances d'humeur</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">👥 Équipe</div>
+                        <div class="card-description">Vue d'ensemble de l'équipe (bientôt)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Morning Form -->
+        <div id="morning-view" class="hidden">
+            <button class="btn btn-back" onclick="showView('home')">← Retour</button>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🌅</div>
+                    <div class="card-title">Saisie Matinale</div>
+                    <div class="card-description">Comment vous sentez-vous ce matin ?</div>
+                </div>
+
+                <div id="morning-success" class="success-message hidden">
+                    Votre saisie matinale a été enregistrée avec succès !
+                </div>
+
+                <form id="morning-form">
+                    <div class="form-group">
+                        <label class="form-label">👤 Prénom</label>
+                        <input type="text" id="morning-name" class="form-input" placeholder="Votre prénom" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">😀 Humeur prévue</label>
+                        <div class="emoji-grid">
+                            <button type="button" class="emoji-btn" data-mood="😊">😊</button>
+                            <button type="button" class="emoji-btn" data-mood="😐">😐</button>
+                            <button type="button" class="emoji-btn" data-mood="😔">😔</button>
+                            <button type="button" class="emoji-btn" data-mood="😴">😴</button>
+                            <button type="button" class="emoji-btn" data-mood="🤗">🤗</button>
+                            <button type="button" class="emoji-btn" data-mood="😤">😤</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">⚡ Niveau d'énergie (1-5)</label>
+                        <div class="rating-container">
+                            <button type="button" class="rating-btn" data-energy="1">🔋</button>
+                            <button type="button" class="rating-btn" data-energy="2">🔋🔋</button>
+                            <button type="button" class="rating-btn" data-energy="3">🔋🔋🔋</button>
+                            <button type="button" class="rating-btn" data-energy="4">🔋🔋🔋🔋</button>
+                            <button type="button" class="rating-btn" data-energy="5">🔋🔋🔋🔋🔋</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">🎨 Couleur du moment</label>
+                        <div class="color-grid">
+                            <button type="button" class="color-btn" data-color="#ef4444" style="background-color: #ef4444;"></button>
+                            <button type="button" class="color-btn" data-color="#f97316" style="background-color: #f97316;"></button>
+                            <button type="button" class="color-btn" data-color="#eab308" style="background-color: #eab308;"></button>
+                            <button type="button" class="color-btn" data-color="#22c55e" style="background-color: #22c55e;"></button>
+                            <button type="button" class="color-btn" data-color="#3b82f6" style="background-color: #3b82f6;"></button>
+                            <button type="button" class="color-btn" data-color="#a855f7" style="background-color: #a855f7;"></button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Enregistrer ma saisie matinale</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Evening Form -->
+        <div id="evening-view" class="hidden">
+            <button class="btn btn-back" onclick="showView('home')">← Retour</button>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🌙</div>
+                    <div class="card-title">Bilan du Soir</div>
+                    <div class="card-description">Comment s'est passée votre journée ?</div>
+                </div>
+
+                <div id="evening-success" class="success-message hidden">
+                    Votre bilan du soir a été enregistré avec succès !
+                </div>
+
+                <form id="evening-form">
+                    <div class="form-group">
+                        <label class="form-label">👤 Prénom</label>
+                        <input type="text" id="evening-name" class="form-input" placeholder="Votre prénom" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">😀 Comment s'est passée ta journée ?</label>
+                        <div class="emoji-grid">
+                            <button type="button" class="emoji-btn" data-actual-mood="😊">😊</button>
+                            <button type="button" class="emoji-btn" data-actual-mood="😐">😐</button>
+                            <button type="button" class="emoji-btn" data-actual-mood="😔">😔</button>
+                            <button type="button" class="emoji-btn" data-actual-mood="😴">😴</button>
+                            <button type="button" class="emoji-btn" data-actual-mood="🤗">🤗</button>
+                            <button type="button" class="emoji-btn" data-actual-mood="😤">😤</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">📊 Note de satisfaction (1-5)</label>
+                        <div class="rating-container">
+                            <button type="button" class="rating-btn" data-satisfaction="1">⭐</button>
+                            <button type="button" class="rating-btn" data-satisfaction="2">⭐⭐</button>
+                            <button type="button" class="rating-btn" data-satisfaction="3">⭐⭐⭐</button>
+                            <button type="button" class="rating-btn" data-satisfaction="4">⭐⭐⭐⭐</button>
+                            <button type="button" class="rating-btn" data-satisfaction="5">⭐⭐⭐⭐⭐</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">📝 Petit commentaire libre</label>
+                        <textarea id="evening-comment" class="form-input" rows="3" placeholder="Partagez vos réflexions sur la journée..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Enregistrer mon bilan</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard-view" class="hidden">
+            <button class="btn btn-back" onclick="showView('home')">← Retour</button>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Tableau de Bord</div>
+                    <div class="card-description">Vos statistiques d'humeur</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-entries">0</div>
+                        <div class="stat-label">Saisies totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="avg-energy">0</div>
+                        <div class="stat-label">Énergie moyenne</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="avg-satisfaction">0</div>
+                        <div class="stat-label">Satisfaction moyenne</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Historique récent</div>
+                    <div id="recent-entries" class="entry-list">
+                        <!-- Entries will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Storage functions
+        const STORAGE_KEY = 'mood_entries';
+        
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+        
+        function getCurrentDate() {
+            return new Date().toISOString().split('T')[0];
+        }
+        
+        function getCurrentDateTime() {
+            return new Date().toISOString();
+        }
+        
+        function getMoodEntries() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                return stored ? JSON.parse(stored) : [];
+            } catch (error) {
+                console.error('Error reading mood entries:', error);
+                return [];
+            }
+        }
+        
+        function saveMoodEntry(entry) {
+            const entries = getMoodEntries();
+            const now = getCurrentDateTime();
+            
+            // Check if entry already exists for this date and type
+            const existingIndex = entries.findIndex(
+                e => e.first_name === entry.first_name && 
+                     e.entry_date === entry.entry_date && 
+                     e.entry_type === entry.entry_type
+            );
+            
+            if (existingIndex >= 0) {
+                // Update existing entry
+                const updatedEntry = {
+                    ...entries[existingIndex],
+                    ...entry,
+                    updated_at: now
+                };
+                entries[existingIndex] = updatedEntry;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+                return updatedEntry;
+            } else {
+                // Create new entry
+                const newEntry = {
+                    ...entry,
+                    id: generateId(),
+                    created_at: now,
+                    updated_at: now
+                };
+                entries.push(newEntry);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+                return newEntry;
+            }
+        }
+        
+        // View management
+        function showView(viewName) {
+            // Hide all views
+            document.querySelectorAll('[id$="-view"]').forEach(view => {
+                view.classList.add('hidden');
+            });
+            
+            // Show selected view
+            document.getElementById(viewName + '-view').classList.remove('hidden');
+            
+            // Load dashboard data if showing dashboard
+            if (viewName === 'dashboard') {
+                loadDashboardData();
+            }
+        }
+        
+        // Form handling
+        let selectedMorningMood = '';
+        let selectedEnergyLevel = 0;
+        let selectedColor = '';
+        let selectedActualMood = '';
+        let selectedSatisfaction = 0;
+        
+        // Morning form handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Morning mood selection
+            document.querySelectorAll('#morning-view .emoji-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#morning-view .emoji-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedMorningMood = this.dataset.mood;
+                });
+            });
+            
+            // Energy level selection
+            document.querySelectorAll('#morning-view .rating-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#morning-view .rating-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedEnergyLevel = parseInt(this.dataset.energy);
+                });
+            });
+            
+            // Color selection
+            document.querySelectorAll('#morning-view .color-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#morning-view .color-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedColor = this.dataset.color;
+                });
+            });
+            
+            // Evening mood selection
+            document.querySelectorAll('#evening-view .emoji-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#evening-view .emoji-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedActualMood = this.dataset.actualMood;
+                });
+            });
+            
+            // Satisfaction rating selection
+            document.querySelectorAll('#evening-view .rating-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#evening-view .rating-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedSatisfaction = parseInt(this.dataset.satisfaction);
+                });
+            });
+            
+            // Morning form submission
+            document.getElementById('morning-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const firstName = document.getElementById('morning-name').value.trim();
+                
+                if (!firstName || !selectedMorningMood || !selectedEnergyLevel || !selectedColor) {
+                    alert('Veuillez remplir tous les champs obligatoires.');
+                    return;
+                }
+                
+                const entry = {
+                    first_name: firstName,
+                    entry_date: getCurrentDate(),
+                    entry_type: 'morning',
+                    predicted_mood: selectedMorningMood,
+                    energy_level: selectedEnergyLevel,
+                    mood_color: selectedColor
+                };
+                
+                saveMoodEntry(entry);
+                
+                // Show success message
+                document.getElementById('morning-success').classList.remove('hidden');
+                
+                // Reset form
+                this.reset();
+                document.querySelectorAll('#morning-view .selected').forEach(el => el.classList.remove('selected'));
+                selectedMorningMood = '';
+                selectedEnergyLevel = 0;
+                selectedColor = '';
+                
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('morning-success').classList.add('hidden');
+                }, 3000);
+            });
+            
+            // Evening form submission
+            document.getElementById('evening-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const firstName = document.getElementById('evening-name').value.trim();
+                const comment = document.getElementById('evening-comment').value.trim();
+                
+                if (!firstName || !selectedActualMood || !selectedSatisfaction) {
+                    alert('Veuillez remplir tous les champs obligatoires.');
+                    return;
+                }
+                
+                const entry = {
+                    first_name: firstName,
+                    entry_date: getCurrentDate(),
+                    entry_type: 'evening',
+                    actual_mood: selectedActualMood,
+                    satisfaction_rating: selectedSatisfaction,
+                    comment: comment
+                };
+                
+                saveMoodEntry(entry);
+                
+                // Show success message
+                document.getElementById('evening-success').classList.remove('hidden');
+                
+                // Reset form
+                this.reset();
+                document.querySelectorAll('#evening-view .selected').forEach(el => el.classList.remove('selected'));
+                selectedActualMood = '';
+                selectedSatisfaction = 0;
+                
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('evening-success').classList.add('hidden');
+                }, 3000);
+            });
+        });
+        
+        // Dashboard functions
+        function loadDashboardData() {
+            const entries = getMoodEntries();
+            
+            // Calculate statistics
+            const totalEntries = entries.length;
+            const energyEntries = entries.filter(e => e.energy_level);
+            const satisfactionEntries = entries.filter(e => e.satisfaction_rating);
+            
+            const avgEnergy = energyEntries.length > 0 
+                ? (energyEntries.reduce((sum, e) => sum + e.energy_level, 0) / energyEntries.length).toFixed(1)
+                : 0;
+                
+            const avgSatisfaction = satisfactionEntries.length > 0
+                ? (satisfactionEntries.reduce((sum, e) => sum + e.satisfaction_rating, 0) / satisfactionEntries.length).toFixed(1)
+                : 0;
+            
+            // Update statistics
+            document.getElementById('total-entries').textContent = totalEntries;
+            document.getElementById('avg-energy').textContent = avgEnergy;
+            document.getElementById('avg-satisfaction').textContent = avgSatisfaction;
+            
+            // Load recent entries
+            const recentEntries = entries
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .slice(0, 10);
+                
+            const entriesContainer = document.getElementById('recent-entries');
+            
+            if (recentEntries.length === 0) {
+                entriesContainer.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 2rem;">Aucune saisie pour le moment</p>';
+                return;
+            }
+            
+            entriesContainer.innerHTML = recentEntries.map(entry => {
+                const date = new Date(entry.created_at).toLocaleDateString('fr-FR');
+                const time = new Date(entry.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                
+                return `
+                    <div class="entry-item">
+                        <div class="entry-header">
+                            <span class="entry-name">${entry.first_name}</span>
+                            <span class="entry-date">${date} à ${time}</span>
+                        </div>
+                        <div class="entry-details">
+                            <span><strong>Type:</strong> ${entry.entry_type === 'morning' ? 'Matin' : 'Soir'}</span>
+                            ${entry.predicted_mood ? `<span><strong>Humeur prévue:</strong> ${entry.predicted_mood}</span>` : ''}
+                            ${entry.actual_mood ? `<span><strong>Ressenti:</strong> ${entry.actual_mood}</span>` : ''}
+                            ${entry.energy_level ? `<span><strong>Énergie:</strong> ${entry.energy_level}/5</span>` : ''}
+                            ${entry.satisfaction_rating ? `<span><strong>Satisfaction:</strong> ${entry.satisfaction_rating}/5</span>` : ''}
+                        </div>
+                        ${entry.comment ? `<div style="margin-top: 0.5rem; font-style: italic; color: #6b7280;">"${entry.comment}"</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
